@@ -31,6 +31,10 @@ def send_message(vk, user_id: int, text: str) -> bool:
 
 def send_message_with_keyboard(vk, user_id: int, text: str, keyboard) -> bool:
     """Отправляет сообщение с клавиатурой"""
+    print(f"🔍 [bot.py] send_message_with_keyboard вызвана для {user_id}")
+    print(f"🔍 [bot.py] текст: {text[:50] if text else 'None'}...")
+    print(f"🔍 [bot.py] клавиатура: {keyboard is not None}")
+
     try:
         params = {
             "user_id": user_id,
@@ -76,24 +80,35 @@ def main():
                 
                 logger.debug(f"Получено сообщение от {user_id}: {text}")
                 
-                # Команды /start, /help
-                if text.startswith("/"):
-                    response_text, keyboard = command_handler.handle(user_id, text)
-                    if response_text:
-                        send_message_with_keyboard(vk, user_id, response_text, keyboard)
-                    continue
+                print(f"🔍 [DEBUG] text = '{text}' (длина: {len(text)})")
+
                 
                 # Команда /book (обрабатывается отдельно, так как запускает процесс записи)
-                if text == "/book":
+                if text.strip() == "/book":
+                    print(f"🔍 [DEBUG] УСЛОВИЕ /book СРАБОТАЛО!")
+                    print(f"🔍 Обработка /book для {user_id}")  # ДОБАВЬ ЭТУ СТРОКУ
+                    response_text, keyboard = booking_handler.handle_command(user_id, text)
+                    print(f"🔍 Ответ: {response_text[:50] if response_text else 'None'}")  # ДОБАВЬ ЭТУ СТРОКУ
+                    send_message_with_keyboard(vk, user_id, response_text, keyboard)
+
                     response_text, keyboard = booking_handler.handle_command(user_id, text)
                     send_message_with_keyboard(vk, user_id, response_text, keyboard)
                     continue
                 
                 # Команда /my_bookings
-                if text == "/my_bookings":
+                if text.strip() == "/my_bookings":
                     response_text, keyboard = booking_handler.handle_command(user_id, text)
                     send_message_with_keyboard(vk, user_id, response_text, keyboard)
                     continue
+
+                # Команды /start, /help
+                if text.startswith("/"):
+                    print(f"🔍 [DEBUG] Это команда, начинающаяся с /")
+                    response_text, keyboard = command_handler.handle(user_id, text)
+                    if response_text:
+                        send_message_with_keyboard(vk, user_id, response_text, keyboard)
+                    continue
+                
                 
                 # Если пользователь в процессе записи — направляем в booking_handler
                 state = booking_handler.booking_service.get_user_state(user_id)
@@ -109,8 +124,11 @@ def main():
             
             # Обработка нажатий на кнопки (callback)
             elif event.type == VkBotEventType.MESSAGE_EVENT:
+                print("🔍🔍🔍 MESSAGE_EVENT ПОЛУЧЕН! 🔍🔍🔍")
                 user_id = event.object.user_id
                 payload = event.object.payload
+
+                print(f"🔍 Получен callback от {user_id}: {payload}")
                 
                 logger.debug(f"Получен callback от {user_id}: {payload}")
                 
