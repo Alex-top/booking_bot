@@ -1,0 +1,37 @@
+# Виртуальное окружение
+venv/
+env/
+ENV/
+.venv/
+book_bot/
+
+# Переменные окружения (токены, пароли)
+.env
+.env.local
+
+# База данных (локальная, не нужна в репозитории)
+*.db
+*.sqlite
+*.sqlite3
+
+# Файлы Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Логи
+*.log
+
+# Тесты
+.pytest_cache/
+.coverage
+htmlcov/

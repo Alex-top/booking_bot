@@ -1,0 +1,43 @@
+booking_bot/
+│
+├── .env                          # Переменные окружения (токен VK, ID группы)
+├── .gitignore                    # Исключаем venv, .env, *.db, __pycache__
+├── requirements.txt              # Зависимости проекта
+├── README.md                     # Описание проекта для портфолио
+│
+├── bot.py                        # ТОЧКА ВХОДА: главный цикл бота
+├── config.py                     # Загрузка настроек из .env
+│
+├── storage/
+│   ├── __init__.py
+│   ├── database.py               # Инициализация БД (создание таблиц)
+│   └── booking_repository.py     # CRUD операции: услуги, слоты, записи
+│
+├── models/
+│   ├── __init__.py
+│   ├── service.py                # Модель услуги
+│   ├── master.py                 # Модель мастера
+│   ├── slot.py                   # Модель временного слота
+│   └── booking.py                # Модель записи
+│
+├── handlers/
+│   ├── __init__.py
+│   ├── booking_handler.py        # КОНЕЧНЫЙ АВТОМАТ: управление шагами записи
+│   ├── command_handler.py        # Обработка команд (/start, /book, /my_bookings)
+│   └── keyboards.py              # СОЗДАНИЕ КЛАВИАТУР: услуги, даты, время
+│
+├── services/
+│   ├── __init__.py
+│   ├── booking_service.py        # БИЗНЕС-ЛОГИКА: поиск слотов, создание записи
+│   └── reminder_service.py       # ОПЦИОНАЛЬНО: напоминания о записи
+│
+├── utils/
+│   ├── __init__.py
+│   ├── logger.py                 # Логирование (скопируй из напоминалки)
+│   ├── time_utils.py             # Утилиты для работы с датами/временем
+│   └── validators.py             # Проверка данных (телефон, дата и т.д.)
+│
+└── tests/                        # ОПЦИОНАЛЬНО: для pytest
+    ├── __init__.py
+    ├── test_repository.py
+    └── test_booking_service.py

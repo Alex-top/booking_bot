@@ -1,0 +1,59 @@
+Установка и запуск тестов
+# Установка pytest
+pip install pytest
+
+ Запуск всех тестов
+pytest tests/ -v
+
+# Запуск с отчетом о покрытии (опционально)
+pip install pytest-cov
+pytest tests/ --cov=. --cov-report=term
+-------------------------------------------
+# Установка
+pip install -r requirements.txt
+pip freeze > requirements.txt
+
+📦 Работа с виртуальным окружением
+
+# 1. Создать виртуальное окружение (если еще не создано)
+python -m venv venv
+
+🔹 Активация виртуального окружения
+В зависимости от ОС:
+
+bash
+# Windows
+venv\Scripts\activate
+
+# macOS / Linux
+source venv/bin/activate
+После активации в начале строки терминала появится (venv).
+--------------------------------------------------------------
+Работа с Git, GitHub:
+# 1. Создать папку проекта (если ещё нет)
+mkdir название_проекта
+
+# 2. Перейти в папку
+cd название_проекта
+
+3. Инициализируйте Git
+git init
+
+4. Создайте файл .gitignore (если нужно)
+# Для Python проекта
+echo "__pycache__/" > .gitignore
+echo "venv/" >> .gitignore
+echo ".env" >> .gitignore
+
+# Или через редактор
+notepad .gitignore
+
+5. Добавьте файлы в Git
+# Добавить все файлы
+git add .
+
+# Или конкретные файлы
+git add README.md main.py
+
+6. Сделайте первый коммит
+git commit -m "Initial commit"
