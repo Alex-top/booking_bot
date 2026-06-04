@@ -127,6 +127,8 @@ git add .
 git commit -m "Первый коммит"
 
 # Переименовать ветку (если нужно)
+Посмотреть название ветки:
+git branch
 git branch -M main
 
 # Добавить remote
