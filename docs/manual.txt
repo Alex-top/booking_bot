@@ -57,3 +57,80 @@ git add README.md main.py
 
 6. Сделайте первый коммит
 git commit -m "Initial commit"
+
+Шаг 6: Создайте репозиторий на GitHub
+ 1. Зайдите на github.com и войдите
+
+ 2. Нажмите зеленую кнопку "New" или значок + → New repository
+
+ 3. Введите Repository name (например, my-new-project)
+
+ 4. Выберите Public или Private
+
+ 5. НЕ СТАВЬТЕ галочки "Add a README file", ".gitignore", "license"
+
+ 6. Нажмите "Create repository"
+
+ Шаг 7: Свяжите локальный репозиторий с GitHub:
+    # Добавьте удалённый репозиторий (URL возьмите со страницы GitHub)
+    git remote add origin https://github.com/ВАШ_НИК/НАЗВАНИЕ_РЕПО.git
+
+    # Проверьте
+    git remote -v
+
+Шаг 8: Отправьте код на GitHub:
+# Если ветка называется master
+git push -u origin master
+
+# Если ветка называется main (современный стандарт)
+git branch -M main  # переименовать master в main
+git push -u origin main
+
+
+Полный пример (все команды разом):
+# 1. Создаём и переходим в проект
+mkdir my-awesome-project
+cd my-awesome-project
+
+# 2. Инициализируем Git
+git init
+
+# 3. Создаём .gitignore (для Python)
+echo "__pycache__/" > .gitignore
+echo "venv/" >> .gitignore
+echo ".env" >> .gitignore
+
+# 4. Создаём README (опционально)
+echo "# My Awesome Project" > README.md
+
+# 5. Добавляем файлы и коммитим
+git add .
+git commit -m "Initial commit"
+
+# 6. Переименовываем ветку в main
+git branch -M main
+
+# 7. Добавляем remote (ЗАМЕНИТЕ НА ВАШ URL!)
+git remote add origin https://github.com/ВАШ_НИК/my-awesome-project.git
+
+# 8. Отправляем на GitHub
+git push -u origin main
+
+Быстрая памятка (шпаргалка):
+# Инициализация
+git init
+
+# Добавить все файлы
+git add .
+
+# Коммит
+git commit -m "Первый коммит"
+
+# Переименовать ветку (если нужно)
+git branch -M main
+
+# Добавить remote
+git remote add origin https://github.com/пользователь/репозиторий.git
+
+# Запушить
+git push -u origin main
