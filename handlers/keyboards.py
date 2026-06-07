@@ -57,9 +57,17 @@ class BookingKeyboards:
         keyboard = VkKeyboard(one_time=False, inline=True)
         
         for master in masters:
+            # Укорачиваем текст кнопки (максимум 40 символов)
             label = f"👤 {master['name']}"
+            # Если есть описание, добавляем его только если помещается
             if master.get('description'):
-                label += f" ({master['description'][:30]})"
+                short_desc = master['description'][:20]  # Берём первые 20 символов
+                label = f"👤 {master['name']} ({short_desc}...)"
+            
+            # Если всё равно длиннее 40 символов — обрезаем
+            if len(label) > 40:
+                label = label[:37] + "..."
+            
             keyboard.add_callback_button(
                 label=label,
                 color=VkKeyboardColor.PRIMARY,
