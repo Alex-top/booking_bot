@@ -56,7 +56,7 @@ class BookingHandler:
             master_id = payload.get('master_id')
             master = self.booking_service.get_master_by_id(master_id)
             if master:
-                self.booking_service.set_temp_data(user_id, 'master_id', self.master_id)
+                self.booking_service.set_temp_data(user_id, 'master_id', master_id)
                 self.booking_service.set_user_state(user_id, self.booking_service.STATE_SELECT_DATE)
                 return self._show_dates(user_id, master_id)
             else:

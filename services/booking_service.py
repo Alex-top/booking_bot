@@ -53,6 +53,41 @@ class BookingService:
             del self.user_temp_data[user_id]
     
     # ========== БИЗНЕС-МЕТОДЫ ==========
+
+    def get_slot_by_id(self, slot_id: int) -> Optional[Dict[str, Any]]:
+        """Получить слот по ID"""
+        return booking_repo.get_slot_by_id(slot_id)
+    
+    def get_free_slots_by_date(self, master_id: int, date_str: str) -> List[Dict[str, Any]]:
+        """Получить свободные слоты мастера на дату"""
+        return booking_repo.get_free_slots_by_master_and_date(master_id, date_str)
+    
+    def get_available_dates(self, master_id: int, days_ahead: int = 7) -> List[str]:
+        """Получить список дат, на которых есть свободные слоты"""
+        from datetime import datetime, timedelta
+        dates = []
+        today = datetime.now()
+        
+        for i in range(days_ahead):
+            date = today + timedelta(days=i)
+            date_str = date.strftime('%Y-%m-%d')
+            slots = self.get_free_slots_by_date(master_id, date_str)
+            if slots:
+                dates.append(date_str)
+        
+        return dates
+    
+    def get_user_temp_data(self, user_id: int) -> Dict[str, Any]:
+        """Получить все временные данные пользователя"""
+        return self.user_temp_data.get(user_id, {})
+    
+    def clear_user_state(self, user_id: int):
+        """Очистить состояние и данные пользователя"""
+        self.set_user_state(user_id, None)
+
+    def get_master_by_id(self, master_id: int) -> Optional[Dict[str, Any]]:
+        """Получить мастера по ID"""
+        return booking_repo.get_master_by_id(master_id)
     
     def get_all_services(self) -> List[Dict[str, Any]]:
         """Получить все услуги"""

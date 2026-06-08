@@ -166,3 +166,50 @@ git remote set-url origin https://github.com/Alex-top/booking_bot.git
 
 # Проверить
 git remote -v
+
+Копирование проекта на другой компьютер:
+Шаг 1: Установите Git на новом компьютере (если не установлен)
+Скачайте с git-scm.com и установите.
+
+Шаг 2: Настройте Git (имя и email)
+git config --global user.name "Alex-top"
+git config --global user.email "your-email@example.com"
+
+# Проверить настройки
+git config --list
+
+Шаг 3: Склонируйте репозиторий с GitHub:
+# Перейдите в папку, где хотите разместить проект
+cd Desktop
+
+# Клонируйте репозиторий
+git clone https://github.com/Alex-top/booking_bot.git
+
+# Перейдите в папку проекта
+cd booking_bot
+
+Шаг 4: Проверьте связь с удаленным репозиторием:
+# Посмотреть remote
+git remote -v
+
+# Должно показать:
+# origin  https://github.com/Alex-top/booking_bot.git (fetch)
+# origin  https://github.com/Alex-top/booking_bot.git (push)
+
+Шаг 5: Создайте и активируйте виртуальное окружение:
+# Создать виртуальное окружение
+python -m venv venv
+
+# Активировать (выберите вашу ОС):
+
+# Windows:
+venv\Scripts\activate
+
+# macOS/Linux:
+source venv/bin/activate
+
+Шаг 6: Установите зависимости:
+# Если есть файл requirements.txt
+pip install -r requirements.txt
+
+# Если нет, установите нужные пакеты вручную
