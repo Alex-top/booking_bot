@@ -1,1 +1,46 @@
 При нажатии на кнопки "Записаться", "Мои записи", "Помощь", бот выводит сообщение: " Я бот для записи. Используйте /start для меню." Эти кнопки показываются только, если не используешь команды. После использования команд эти кнопки уже не будут показываться.
+В воскресенье не выводится выбор дат и не записывает на услугу.
+
+лог: (book_bot) PS C:\Users\Хабирев АЕ\Desktop\python developer\vkontakte\booking_bot> py bot.py
+[2026-08-22 11:37:29] [INFO] __main__ - 🚀 Запуск бота для записи...
+[2026-08-22 11:37:29] [INFO] __main__ - ✅ Бот запущен и слушает сообщения...
+[2026-08-22 11:37:50] [DEBUG] __main__ - Получено сообщение от 174258771: /book
+🔍 [DEBUG] text = '/book' (длина: 5)
+🔍 [DEBUG] УСЛОВИЕ /book СРАБОТАЛО!
+🔍 Обработка /book для 174258771
+🔍 handle_command получил: /book
+🔍 _show_services вызван
+🔍 Получено услуг: 4
+🔍 Ответ: 📋 *Выберите услугу:*
+🔍 [bot.py] send_message_with_keyboard вызвана для 174258771
+🔍 [bot.py] текст: 📋 *Выберите услугу:*...
+🔍 [bot.py] клавиатура: True
+🔍 handle_command получил: /book
+🔍 _show_services вызван
+🔍 Получено услуг: 4
+🔍 [bot.py] send_message_with_keyboard вызвана для 174258771
+🔍 [bot.py] текст: 📋 *Выберите услугу:*...
+🔍 [bot.py] клавиатура: True
+🔍🔍🔍 MESSAGE_EVENT ПОЛУЧЕН! 🔍🔍🔍
+🔍 Получен callback от 174258771: {'action': 'back_to_main'}
+[2026-08-22 11:38:12] [DEBUG] __main__ - Получен callback от 174258771: {'action': 'back_to_main'}
+[2026-08-22 11:38:12] [DEBUG] handlers.booking_handler - BookingHandler callback: user=174258771, action=back_to_main
+🔍 [bot.py] send_message_with_keyboard вызвана для 174258771
+🔍 [bot.py] текст: 👋 Добро пожаловать в бот записи!
+
+📌 *Доступные ком...
+🔍 [bot.py] клавиатура: True
+🔍🔍🔍 MESSAGE_EVENT ПОЛУЧЕН! 🔍🔍🔍
+🔍 Получен callback от 174258771: {'action': 'select_service', 'service_id': 1}
+[2026-08-22 11:43:33] [DEBUG] __main__ - Получен callback от 174258771: {'action': 'select_service', 'service_id': 1}
+[2026-08-22 11:43:33] [DEBUG] handlers.booking_handler - BookingHandler callback: user=174258771, action=select_service
+🔍 [bot.py] send_message_with_keyboard вызвана для 174258771
+🔍 [bot.py] текст: 💇 *Выберите мастера:*...
+🔍 [bot.py] клавиатура: True
+🔍🔍🔍 MESSAGE_EVENT ПОЛУЧЕН! 🔍🔍🔍
+🔍 Получен callback от 174258771: {'action': 'select_master', 'master_id': 1}
+[2026-08-22 11:43:37] [DEBUG] __main__ - Получен callback от 174258771: {'action': 'select_master', 'master_id': 1}
+[2026-08-22 11:43:37] [DEBUG] handlers.booking_handler - BookingHandler callback: user=174258771, action=select_master
+🔍 [bot.py] send_message_with_keyboard вызвана для 174258771
+🔍 [bot.py] текст: 😔 На ближайшие дни нет свободных слотов. Попробуйт...
+🔍 [bot.py] клавиатура: True
