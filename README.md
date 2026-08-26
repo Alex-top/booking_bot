@@ -1,5 +1,7 @@
 # Бот для записи к специалисту (VK)
 
+📚 [**Смотреть все проекты в портфолио**](https://github.com/Alex-top/portfolio)
+
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
 [![VK API](https://img.shields.io/badge/VK%20API-5.199-blue)](https://dev.vk.com/)
@@ -132,5 +134,3 @@ services     - Услуги (id, name, duration, price)
 masters      - Мастера (id, name, description)
 slots        - Слоты (id, master_id, service_id, start_time, end_time)
 bookings     - Записи (id, user_id, slot_id, service_id, master_id, status)
-
-📚 [Смотреть все проекты в портфолио](https://github.com/ваш-аккаунт/portfolio)
