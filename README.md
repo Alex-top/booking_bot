@@ -132,3 +132,5 @@ services     - Услуги (id, name, duration, price)
 masters      - Мастера (id, name, description)
 slots        - Слоты (id, master_id, service_id, start_time, end_time)
 bookings     - Записи (id, user_id, slot_id, service_id, master_id, status)
+
+📚 [Смотреть все проекты в портфолио](https://github.com/ваш-аккаунт/portfolio)
