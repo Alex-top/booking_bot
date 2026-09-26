@@ -91,8 +91,8 @@ def main():
                     print(f"🔍 Ответ: {response_text[:50] if response_text else 'None'}")  # ДОБАВЬ ЭТУ СТРОКУ
                     send_message_with_keyboard(vk, user_id, response_text, keyboard)
 
-                    response_text, keyboard = booking_handler.handle_command(user_id, text)
-                    send_message_with_keyboard(vk, user_id, response_text, keyboard)
+                    #response_text, keyboard = booking_handler.handle_command(user_id, text)
+                    #send_message_with_keyboard(vk, user_id, response_text, keyboard)
                     continue
                 
                 # Команда /my_bookings

@@ -203,24 +203,39 @@ class BookingHandler:
         if not service or not master:
             return "❌ Ошибка: не выбрана услуга или мастер. Начните запись заново командой /book", BookingKeyboards.get_main_keyboard()
         
-        # Парсим дату и время
+        # === ПАРСИНГ ДАТЫ И ВРЕМЕНИ ===
         start_time = slot['start_time']
-        if ' ' in start_time:
-            date_part = start_time.split(' ')[0]
-            time_part = start_time.split(' ')[1][:5]
-            date_obj = datetime.strptime(date_part, '%Y-%m-%d')
-            date_str = date_obj.strftime('%d.%m.%Y')
-        else:
-            date_str = start_time[:10]
-            time_part = "?"
+        date_str = "?"
+        time_part = "?"
+        
+        try:
+            if ' ' in start_time:
+                # Формат: "2026-06-08 10:00:00"
+                date_part = start_time.split(' ')[0]
+                time_part = start_time.split(' ')[1][:5]  # "10:00"
+                date_obj = datetime.strptime(date_part, '%Y-%m-%d')
+                date_str = date_obj.strftime('%d.%m.%Y')
+            elif 'T' in start_time:
+                # Формат ISO: "2026-06-08T10:00:00"
+                date_part = start_time.split('T')[0]
+                time_part = start_time.split('T')[1][:5]
+                date_obj = datetime.strptime(date_part, '%Y-%m-%d')
+                date_str = date_obj.strftime('%d.%m.%Y')
+            elif ':' in start_time:
+                # Только время: "10:00:00"
+                time_part = start_time[:5]
+        except Exception as e:
+            print(f"⚠️ Ошибка парсинга времени: {e}")
+            date_str = start_time[:10] if len(start_time) >= 10 else "?"
+            time_part = start_time[11:16] if len(start_time) >= 16 else "?"
         
         message = (f"📝 *Подтвердите запись*\n\n"
-                   f"💇 Услуга: {service['name']}\n"
-                   f"💰 Цена: {service['price']} ₽\n"
-                   f"👤 Мастер: {master['name']}\n"
-                   f"📅 Дата: {date_str}\n"
-                   f"🕐 Время: {time_part}\n\n"
-                   f"✅ Нажмите «Подтвердить», чтобы завершить запись.")
+                f"💇 Услуга: {service['name']}\n"
+                f"💰 Цена: {service['price']} ₽\n"
+                f"👤 Мастер: {master['name']}\n"
+                f"📅 Дата: {date_str}\n"
+                f"🕐 Время: {time_part}\n\n"
+                f"✅ Нажмите «Подтвердить», чтобы завершить запись.")
         
         keyboard = BookingKeyboards.get_confirm_keyboard(
             service['name'], master['name'], date_str, time_part, service['price'], slot_id

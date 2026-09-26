@@ -131,7 +131,7 @@ class BookingKeyboards:
     def get_time_slots_keyboard(slots: List[Dict[str, Any]]) -> VkKeyboard:
         """
         Инлайн-клавиатура для выбора времени из доступных слотов.
-        Кнопки с временем размещаем по 3 в строке.
+        Показывает ТОЛЬКО время (например, 10:00), без года и даты.
         """
         keyboard = VkKeyboard(one_time=False, inline=True)
         
@@ -144,9 +144,19 @@ class BookingKeyboards:
         else:
             for i, slot in enumerate(slots):
                 start_time = slot['start_time']
+                
+                # Извлекаем ТОЛЬКО время из строки вида "2026-06-08 10:00:00"
+                time_str = "?"
                 if ' ' in start_time:
-                    time_str = start_time.split(' ')[1][:5]
-                else:
+                    # Берём часть после пробела и обрезаем до 5 символов (ЧЧ:ММ)
+                    time_part = start_time.split(' ')[1]
+                    time_str = time_part[:5]  # "10:00"
+                elif 'T' in start_time:
+                    # На случай формата ISO "2026-06-08T10:00:00"
+                    time_part = start_time.split('T')[1]
+                    time_str = time_part[:5]
+                elif ':' in start_time:
+                    # Если уже только время "10:00:00"
                     time_str = start_time[:5]
                 
                 keyboard.add_callback_button(
@@ -154,7 +164,8 @@ class BookingKeyboards:
                     color=VkKeyboardColor.POSITIVE,
                     payload={'action': 'select_time', 'slot_id': slot['id']}
                 )
-                # После каждых 3 кнопок — новая строка
+                
+                # По 3 кнопки в строке
                 if (i + 1) % 3 == 0 and i + 1 < len(slots):
                     keyboard.add_line()
         

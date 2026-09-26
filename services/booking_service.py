@@ -171,21 +171,51 @@ class BookingService:
     
     def format_booking_message(self, booking: Dict[str, Any]) -> str:
         """Форматирует запись для отображения пользователю"""
-        start_time = booking['start_time']
-        # Парсим дату и время
-        if ' ' in start_time:
-            date_part = start_time.split(' ')[0]
-            time_part = start_time.split(' ')[1][:5]
-            date_obj = datetime.strptime(date_part, '%Y-%m-%d')
-            date_str = date_obj.strftime('%d.%m.%Y')
-        else:
-            date_str = start_time[:10]
-            time_part = "?"
+        start_time = booking.get('start_time', '')
+        
+        # === ПАРСИНГ ДАТЫ И ВРЕМЕНИ ===
+        date_str = "?"
+        time_part = "?"
+        
+        try:
+            if ' ' in start_time:
+                # Формат: "2026-06-08 10:00:00"
+                date_part = start_time.split(' ')[0]
+                time_part = start_time.split(' ')[1][:5]
+                date_obj = datetime.strptime(date_part, '%Y-%m-%d')
+                date_str = date_obj.strftime('%d.%m.%Y')
+            elif 'T' in start_time:
+                # Формат ISO: "2026-06-08T10:00:00"
+                date_part = start_time.split('T')[0]
+                time_part = start_time.split('T')[1][:5]
+                date_obj = datetime.strptime(date_part, '%Y-%m-%d')
+                date_str = date_obj.strftime('%d.%m.%Y')
+            elif ':' in start_time:
+                time_part = start_time[:5]
+                date_str = datetime.now().strftime('%d.%m.%Y')
+        except Exception as e:
+            print(f"⚠️ Ошибка парсинга: {e}")
+            date_str = start_time[:10] if len(start_time) >= 10 else "?"
+            time_part = start_time[11:16] if len(start_time) >= 16 else "?"
+        
+        # === ЦЕНА ===
+        # Пытаемся получить цену из разных источников
+        price = booking.get('price')
+        if not price:
+            # Если цены нет в booking, получаем из услуги
+            service_id = booking.get('service_id')
+            if service_id:
+                service = self.get_service_by_id(service_id)
+                if service:
+                    price = service.get('price', '?')
+        
+        if not price:
+            price = '?'
         
         return (f"📅 {date_str} в {time_part}\n"
-                f"💇 {booking['service_name']}\n"
-                f"👤 Мастер: {booking['master_name']}\n"
-                f"💰 {booking.get('price', '?')} ₽")
+                f"💇 {booking.get('service_name', '?')}\n"
+                f"👤 Мастер: {booking.get('master_name', '?')}\n"
+                f"💰 {price} ₽")
 
 
 # Создаём единственный экземпляр сервиса
