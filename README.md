@@ -35,7 +35,7 @@
 
 ### 1. Клонирование репозитория
 ```bash
-git clone https://github.com/ваш-аккаунт/booking_bot.git
+git clone https://github.com/Alex-top/booking_bot.git
 cd booking_bot
 
 
